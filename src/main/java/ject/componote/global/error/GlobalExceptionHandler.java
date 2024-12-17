@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -30,6 +31,13 @@ public class GlobalExceptionHandler {
         log.error("SQL 예외 발생. ", exception);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of(INTERNAL_SERVER_ERROR, "SQL 오류입니다."));
+    }
+
+    @ExceptionHandler(WebClientRequestException.class)
+    public ResponseEntity<ErrorResponse> handleWebClientRequestException(final WebClientRequestException exception) {
+        log.error("외부 API 호출 실패. ", exception);
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                .body(ErrorResponse.of(INTERNAL_SERVER_ERROR, "외부 API 연결에 실패하였습니다. 외부 API 엔드포인트: " + exception.getUri()));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

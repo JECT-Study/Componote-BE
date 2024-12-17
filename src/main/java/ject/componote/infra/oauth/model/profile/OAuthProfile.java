@@ -9,8 +9,6 @@ public abstract class OAuthProfile {
         this.attributes = attributes;
     }
 
-    public abstract String getNickname();
-    public abstract String getProfileImage();
     public abstract String getProviderType();
-    public abstract String getProviderId();
+    public abstract String getSocialId();
 }

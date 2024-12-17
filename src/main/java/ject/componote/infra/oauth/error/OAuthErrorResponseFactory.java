@@ -2,11 +2,11 @@ package ject.componote.infra.oauth.error;
 
 import ject.componote.infra.oauth.error.profile.response.OAuthProfileErrorResponse;
 import ject.componote.infra.oauth.error.profile.response.detail.GoogleProfileErrorResponse;
-import ject.componote.infra.oauth.error.profile.response.detail.KakaoProfileErrorResponse;
+import ject.componote.infra.oauth.error.profile.response.detail.GithubProfileErrorResponse;
 import ject.componote.infra.oauth.error.profile.response.detail.NaverProfileErrorResponse;
 import ject.componote.infra.oauth.error.token.response.OAuthTokenIssueErrorResponse;
 import ject.componote.infra.oauth.error.token.response.detail.GoogleTokenIssueErrorResponse;
-import ject.componote.infra.oauth.error.token.response.detail.KakaoTokenIssueErrorResponse;
+import ject.componote.infra.oauth.error.token.response.detail.GithubTokenIssueErrorResponse;
 import ject.componote.infra.oauth.error.token.response.detail.NaverTokenIssueErrorResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -19,8 +19,8 @@ public final class OAuthErrorResponseFactory {
     private static final Map<String, ProviderErrorResponseConfig> errorResponseConfigMap = new HashMap<>();
 
     static {
-        errorResponseConfigMap.put("kakao", new ProviderErrorResponseConfig(
-                KakaoProfileErrorResponse.class, KakaoTokenIssueErrorResponse.class)
+        errorResponseConfigMap.put("github", new ProviderErrorResponseConfig(
+                GithubProfileErrorResponse.class, GithubTokenIssueErrorResponse.class)
         );
         errorResponseConfigMap.put("naver", new ProviderErrorResponseConfig(
                 NaverProfileErrorResponse.class, NaverTokenIssueErrorResponse.class)

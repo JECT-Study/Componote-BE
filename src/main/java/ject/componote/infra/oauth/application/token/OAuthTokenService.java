@@ -1,6 +1,6 @@
 package ject.componote.infra.oauth.application.token;
 
-import ject.componote.infra.oauth.application.decorator.OAuthTimeoutDecorator;
+import ject.componote.infra.util.TimeoutDecorator;
 import ject.componote.infra.oauth.dto.token.response.OAuthTokenResponse;
 import ject.componote.infra.oauth.error.token.OAuthTokenIssueException;
 import ject.componote.infra.oauth.model.OAuthProvider;
@@ -19,12 +19,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class OAuthTokenService {
     private final OAuthParamConverter oAuthParamConverter;
-    private final OAuthTimeoutDecorator oAuthTimeoutDecorator;
+    private final TimeoutDecorator timeoutDecorator;
     private final TokenIssueFailHandler tokenIssueFailHandler;
     private final WebClient webClient;
 
-    public Mono<OAuthTokenResponse> getToken(final OAuthProvider oAuthProvider, final String code) {
-        return oAuthTimeoutDecorator.decorate(getTokenFromCode(oAuthProvider, code))
+    public Mono<OAuthTokenResponse> getToken(final OAuthProvider oAuthProvider, final String code, final int maxRetry, final int timeout) {
+        return timeoutDecorator.decorate(getTokenFromCode(oAuthProvider, code), maxRetry, timeout)
                 .flatMap(response -> {
                     if (failedTokenIssue(response)) {
                         return Mono.error(OAuthTokenIssueException.createWhenResponseIsNullOrEmpty());
@@ -37,6 +37,7 @@ public class OAuthTokenService {
     private Mono<OAuthTokenResponse> getTokenFromCode(final OAuthProvider provider, final String code) {
         return webClient.method(provider.tokenMethod())
                 .uri(provider.tokenUrl())
+                .accept(MediaType.parseMediaType("application/vnd.github+json"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromFormData(oAuthParamConverter.convertToTokenParams(provider, code)))
                 .retrieve()
@@ -46,6 +47,6 @@ public class OAuthTokenService {
     }
 
     private boolean failedTokenIssue(final OAuthTokenResponse oAuthTokenResponse) {
-        return Objects.isNull(oAuthTokenResponse) || oAuthTokenResponse.access_token().isEmpty();
+        return Objects.isNull(oAuthTokenResponse) || oAuthTokenResponse.access_token() == null || oAuthTokenResponse.access_token().isEmpty();
     }
 }

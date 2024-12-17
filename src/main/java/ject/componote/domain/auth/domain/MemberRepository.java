@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    boolean existsByProviderTypeAndSocialId(final String providerType, final String socialId);
-    Optional<Member> findBySocialId(final String socialId);
+    boolean existsBySocialAccountId(final Long socialAccountId);
+    Optional<Member> findBySocialAccountId(final Long socialAccountId);
 
     @Query("SELECT NEW ject.componote.domain.auth.dto.find.MemberSummaryDto(m.nickname, m.profileImage) " +
             "FROM Member m " +

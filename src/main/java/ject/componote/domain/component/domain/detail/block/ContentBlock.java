@@ -25,9 +25,6 @@ public abstract class ContentBlock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "component_id", nullable = false)
-    private Long componentId;
-
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private DetailType type;
@@ -35,15 +32,8 @@ public abstract class ContentBlock {
     @Column(name = "orders", nullable = false)
     private Integer order;
 
-    public ContentBlock(final Long componentId, final DetailType type, final Integer order) {
-        this.componentId = componentId;
+    public ContentBlock(final DetailType type, final Integer order) {
         this.type = type;
         this.order = order;
-    }
-
-    public void setComponentId(final Long componentId) {
-        if (componentId != null) {
-            this.componentId = componentId;
-        }
     }
 }

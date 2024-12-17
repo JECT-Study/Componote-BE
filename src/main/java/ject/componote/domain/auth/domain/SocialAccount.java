@@ -2,8 +2,6 @@ package ject.componote.domain.auth.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,15 +23,14 @@ public class SocialAccount {
     private String socialId;
 
     @Column(name = "provider_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ProviderType providerType;
+    private String providerType;
 
-    private SocialAccount(final String socialId, final ProviderType providerType) {
+    private SocialAccount(final String socialId, final String providerType) {
         this.socialId = socialId;
         this.providerType = providerType;
     }
 
     public static SocialAccount of(final String socialId, final String providerType) {
-        return new SocialAccount(socialId, ProviderType.from(providerType));
+        return new SocialAccount(socialId, providerType);
     }
 }

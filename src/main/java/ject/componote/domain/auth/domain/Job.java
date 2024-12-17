@@ -1,5 +1,7 @@
 package ject.componote.domain.auth.domain;
 
+import ject.componote.domain.auth.error.InvalidJobException;
+
 import java.util.Arrays;
 
 public enum Job {
@@ -9,6 +11,6 @@ public enum Job {
         return Arrays.stream(values())
                 .filter(value -> value.name().equals(jobValue.toUpperCase()))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown job: " + jobValue));
+                .orElseThrow(() -> new InvalidJobException(jobValue));
     }
 }

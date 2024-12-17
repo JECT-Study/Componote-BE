@@ -8,7 +8,11 @@ import ject.componote.domain.common.model.Image;
 public class ImageConverter implements AttributeConverter<Image, String> {
     @Override
     public String convertToDatabaseColumn(final Image attribute) {
-        return attribute.getFilename();
+        if (attribute == null) {
+            return null;
+        }
+
+        return attribute.getObjectKey();
     }
 
     @Override

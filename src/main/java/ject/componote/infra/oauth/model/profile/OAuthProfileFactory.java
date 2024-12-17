@@ -3,7 +3,7 @@ package ject.componote.infra.oauth.model.profile;
 import ject.componote.infra.oauth.error.UnsupportedProviderException;
 import ject.componote.infra.oauth.model.OAuthProvider;
 import ject.componote.infra.oauth.model.profile.detail.GoogleProfile;
-import ject.componote.infra.oauth.model.profile.detail.KakaoProfile;
+import ject.componote.infra.oauth.model.profile.detail.GithubProfile;
 import ject.componote.infra.oauth.model.profile.detail.NaverProfile;
 
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 public enum OAuthProfileFactory {
-    KAKAO("kakao", KakaoProfile::new),
+    KAKAO("github", GithubProfile::new),
     NAVER("naver", NaverProfile::new),
     GOOGLE("google", GoogleProfile::new);
 

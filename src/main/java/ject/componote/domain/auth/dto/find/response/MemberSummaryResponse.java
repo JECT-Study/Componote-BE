@@ -6,7 +6,7 @@ public record MemberSummaryResponse(String nickname, String profilePhotoUrl) {
     public static MemberSummaryResponse from(MemberSummaryDto memberSummaryDto) {
         return new MemberSummaryResponse(
                 memberSummaryDto.nickname().getValue(),
-                memberSummaryDto.profilePhoto().getFilename()
+                memberSummaryDto.profilePhoto().getObjectKey()
         );
     }
 }

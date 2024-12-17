@@ -1,34 +1,40 @@
 package ject.componote.domain.common.model;
 
+import ject.componote.domain.common.error.InvalidImageExtensionException;
+import ject.componote.domain.common.error.NotFoundImageException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.util.StringUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 @EqualsAndHashCode
 @ToString
 public class Image {
-    private final String filename;  // 변경해도 상관없음
+    private static final List<String> ALLOWED_IMAGE_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png", "gif");
 
-    private Image(final String filename) {
-        this.filename = filename;
+    private final String objectKey;  // 변경해도 상관없음
+
+    private Image(final String objectKey) {
+        validateObjectKey(objectKey);
+        this.objectKey = objectKey;
     }
 
-    public static Image from(final String filename) {
-        return new Image(filename);
+    public static Image from(final String objectKey) {
+        return new Image(objectKey);
     }
 
-    private void validateFileName(final String filename) {
-        if (filename == null || filename.isEmpty()) {
-            throw new IllegalArgumentException("Filename cannot be null or empty");
+    private void validateObjectKey(final String objectKey) {
+        if (objectKey == null || objectKey.isEmpty()) {
+            throw new NotFoundImageException();
         }
-    }
 
-    public String toPath(final String folder) {
-        return folder + "/" + filename;
-    }
-
-    public String toUrl(final String bucketName, final String folder) {
-        return "https://" + bucketName + ".s3.amazonaws.com" + toPath(folder);
+        final String extension = StringUtils.getFilenameExtension(objectKey);
+        if (!ALLOWED_IMAGE_EXTENSIONS.contains(extension)) {
+            throw new InvalidImageExtensionException(extension);
+        }
     }
 }

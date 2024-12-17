@@ -21,12 +21,12 @@ public class TextBlock extends ContentBlock {
     @Column(name = "content", nullable = false)
     private ComponentContent content;
 
-    private TextBlock(final Long componentId, final DetailType type, final ComponentContent content, final Integer order) {
-        super(componentId, type, order);
+    private TextBlock(final DetailType type, final ComponentContent content, final Integer order) {
+        super(type, order);
         this.content = content;
     }
 
-    public static TextBlock of(final Long componentId, final DetailType type, final ComponentContent content, final Integer order) {
-        return new TextBlock(componentId, type, content, order);
+    public static TextBlock of(final DetailType type, final ComponentContent content, final Integer order) {
+        return new TextBlock(type, content, order);
     }
 }

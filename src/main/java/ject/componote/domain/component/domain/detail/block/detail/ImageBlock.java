@@ -21,12 +21,12 @@ public class ImageBlock extends ContentBlock {
     @Column(name = "image", nullable = false)
     private Image image;
 
-    private ImageBlock(final Long componentId, final DetailType type, final Image image, final Integer order) {
-        super(componentId, type, order);
+    private ImageBlock(final DetailType type, final Image image, final Integer order) {
+        super(type, order);
         this.image = image;
     }
 
-    public static ImageBlock of(final Long componentId, final DetailType type, final Image image, final Integer order) {
-        return new ImageBlock(componentId, type, image, order);
+    public static ImageBlock of(final DetailType type, final Image image, final Integer order) {
+        return new ImageBlock(type, image, order);
     }
 }

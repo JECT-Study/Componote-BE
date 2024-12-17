@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SocialAccountMapper {
     public SocialAccount mapFrom(final OAuthProfile oAuthProfile) {
-        return SocialAccount.of(oAuthProfile.getProviderId(), oAuthProfile.getProviderType());
+        return SocialAccount.of(oAuthProfile.getSocialId(), oAuthProfile.getProviderType());
     }
 }

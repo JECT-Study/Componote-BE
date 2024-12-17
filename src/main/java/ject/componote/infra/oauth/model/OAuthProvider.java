@@ -3,6 +3,7 @@ package ject.componote.infra.oauth.model;
 import org.springframework.http.HttpMethod;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public record OAuthProvider(String name,
@@ -26,7 +27,7 @@ public record OAuthProvider(String name,
                 provider.getAuthorize().getResponse_type(),
                 provider.getAuthorize().getUrl(),
                 HttpMethod.valueOf(provider.getAuthorize().getMethod()),
-                new ArrayList<>(client.getScope()),
+                client.getScope() == null ? Collections.emptyList() : new ArrayList<>(client.getScope()),
                 client.getRedirectUri(),
                 provider.getToken().getIssue().getGrant_type(),
                 HttpMethod.valueOf(provider.getToken().getIssue().getMethod()),

@@ -31,7 +31,7 @@ public final class OAuthObjectMapperFactory {
                 .build();
 
         MAPPER_MAP = Map.of(
-                "kakao", LIST_TO_COMMA_MAPPER,
+                "github", LIST_TO_COMMA_MAPPER,
                 "naver", LIST_TO_COMMA_MAPPER,
                 "google", LIST_TO_SPACE_MAPPER
         );

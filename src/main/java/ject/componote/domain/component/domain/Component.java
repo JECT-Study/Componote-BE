@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import ject.componote.domain.common.domain.BaseEntity;
 import ject.componote.domain.common.model.Count;
@@ -37,12 +38,14 @@ public class Component extends BaseEntity {
     private ComponentType type;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "component_id")
     private List<MixedName> mixedNames = new ArrayList<>();
 
     @Embedded
     private ComponentSummary summary;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "component_id")
     private List<ContentBlock> contentBlocks = new ArrayList<>();
 
     @Column(name = "bookmark_count", nullable = false)
@@ -66,7 +69,6 @@ public class Component extends BaseEntity {
     }
 
     public void addBlock(final ContentBlock contentBlock) {
-        contentBlock.setComponentId(this.id);
         this.contentBlocks.add(contentBlock);
     }
 

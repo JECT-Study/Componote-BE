@@ -10,10 +10,10 @@ import java.util.Map;
 public class InMemoryOAuthProviderRepository {
     private final Map<String, OAuthProvider> providers;
 
-    public OAuthProvider findByProviderName(String providerName) {
-        if (!providers.containsKey(providerName)) {
-            throw new UnsupportedProviderException(providerName);
+    public OAuthProvider findByProviderType(final String providerType) {
+        if (!providers.containsKey(providerType)) {
+            throw new UnsupportedProviderException(providerType);
         }
-        return providers.get(providerName);
+        return providers.get(providerType);
     }
 }

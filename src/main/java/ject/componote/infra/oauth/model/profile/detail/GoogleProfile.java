@@ -10,22 +10,12 @@ public class GoogleProfile extends OAuthProfile {
     }
 
     @Override
-    public String getNickname() {
-        return (String) attributes.get("name");
-    }
-
-    @Override
-    public String getProfileImage() {
-        return (String) attributes.get("picture");
-    }
-
-    @Override
     public String getProviderType() {
         return "GOOGLE";
     }
 
     @Override
-    public String getProviderId() {
+    public String getSocialId() {
         return (String) attributes.get("id");
     }
 }

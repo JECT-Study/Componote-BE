@@ -8,6 +8,6 @@ public class UnsupportedProviderException extends OAuthClientException {
     }
 
     public UnsupportedProviderException(final OAuthProvider oAuthProvider) {
-        super(oAuthProvider.name());
+        this(oAuthProvider.name());
     }
 }
